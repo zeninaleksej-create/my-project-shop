@@ -1,0 +1,17 @@
+{% extends "shop/base.html" %}
+
+{% block content %}
+<div class="services-container" style="max-width: 600px; margin: 20px auto;">
+    <h1>Заказать услугу</h1>
+    
+    {% if success %}
+        <p style="color: green;">Спасибо! Ваше пожелание отправлено, мы свяжемся с вами.</p>
+    {% else %}
+        <form method="post" action="{% url 'shop:services' %}" class="service-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="logo" style="cursor: pointer; padding: 10px 20px;">Отправить запрос</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

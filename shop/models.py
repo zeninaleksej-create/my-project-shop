@@ -54,3 +54,20 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.id, self.slug])
+    
+
+
+
+
+
+ # Форма для страницы услуги
+
+class ServiceRequest(models.Model):
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Заявка от {self.email} - {self.created_at.strftime('%d.%m.%Y')}"
+

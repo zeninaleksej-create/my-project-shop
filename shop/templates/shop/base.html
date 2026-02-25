@@ -19,7 +19,7 @@
    
     <div id="header">
   <a href="/" class="logo">Главная</a>
-  
+  <a href="{% url 'shop:services' %}" class="logo">Услуги</a>
   <div class="user">
     {% if request.user.is_authenticated %}
         <!-- Применяем класс logo к приветствию и кнопкам -->

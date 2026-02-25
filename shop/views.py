@@ -63,3 +63,70 @@ def product_search(request):
         'query': query,
         'results': results
     })
+
+
+
+
+def services(request):
+    return render(request, 'shop/services.html')
+
+
+
+
+
+from django.shortcuts import render
+from .forms import ServiceOrderForm
+
+def services(request):
+    if request.method == 'POST':
+        form = ServiceOrderForm(request.POST)
+        if form.is_valid():
+            # Здесь можно отправить письмо или сохранить в базу
+            # Данные в form.cleaned_data['email'], и т.д.
+            return render(request, 'shop/services.html', {'form': form, 'success': True})
+    else:
+        form = ServiceOrderForm()
+    
+    return render(request, 'shop/services.html', {'form': form})
+
+
+
+
+
+
+
+
+
+from django.shortcuts import render
+from django.core.mail import send_mail
+from .forms import ServiceOrderForm
+from .models import ServiceRequest
+
+def services(request):
+    success = False
+    if request.method == 'POST':
+        form = ServiceOrderForm(request.POST)
+        if form.is_valid():
+            # 1. Сохраняем в базу данных
+            data = form.cleaned_data
+            ServiceRequest.objects.create(
+                email=data['email'],
+                phone=data['phone'],
+                description=data['description']
+            )
+            
+            # 2. Отправляем на почту
+            subject = 'Новая заявка на услуги художественной студии'
+            message = f"Почта: {data['email']}\nТелефон: {data['phone']}\nПожелания: {data['description']}"
+            try:
+                send_mail(subject, message, 'info@hlamstore.ru', ['info@hlamstore.ru'])
+            except:
+                pass # Если почта не настроена, сайт не упадет
+            
+            success = True
+    else:
+        form = ServiceOrderForm()
+    
+    return render(request, 'shop/services.html', {'form': form, 'success': success})
+
+
