@@ -1,17 +1,19 @@
 {% extends "shop/base.html" %}
 
+{% block title %}Заказать услугу{% endblock %}
+
 {% block content %}
-<div class="services-container" style="max-width: 600px; margin: 20px auto;">
-    <h1>Заказать услугу</h1>
-    
+  <h1>Заказать услугу</h1>
+  
+  <div class="login-form">
     {% if success %}
-        <p style="color: green;">Спасибо! Ваше пожелание отправлено, мы свяжемся с вами.</p>
+        <p style="color: green; text-align: center;">Спасибо! Ваше пожелание отправлено, мы свяжемся с вами.</p>
     {% else %}
-        <form method="post" action="{% url 'shop:services' %}" class="service-form">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="logo" style="cursor: pointer; padding: 10px 20px;">Отправить запрос</button>
+        <form method="post" action="{% url 'shop:services' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <p><input type="submit" value="Отправить запрос"></p>
         </form>
     {% endif %}
-</div>
+  </div>
 {% endblock %}

@@ -4,10 +4,15 @@
 
 {% block content %}
   <h1>Создать аккаунт</h1>
-  <p>Пожалуйста, заполните форму ниже:</p>
-  <form method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <p><input type="submit" value="Зарегистрироваться"></p>
-  </form>
+  
+  <!-- Оборачиваем в div с классом login-form для центровки -->
+  <div class="login-form">
+    <p style="text-align: center;">Пожалуйста, заполните форму ниже:</p>
+    
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <p><input type="submit" value="Зарегистрироваться"></p>
+    </form>
+  </div>
 {% endblock %}
