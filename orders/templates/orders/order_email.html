@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; line-height: 1.6;">
+    <h2>Новый заказ №{{ order.id }}</h2>
+    <p>Здравствуйте, {{ order.first_name }}!</p>
+    <p>Ваш заказ успешно оформлен и скоро будет обработан.</p>
+    
+    <h3>Детали доставки:</h3>
+    <ul>
+        <li><strong>Адрес:</strong> {{ order.city }}, {{ order.address }}</li>
+        <li><strong>Почтовый индекс:</strong> {{ order.postal_code }}</li>
+    </ul>
+
+    <h3>Состав заказа:</h3>
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #f8f8f8;">
+                <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Товар</th>
+                <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Кол-во</th>
+                <th style="padding: 10px; border: 1px solid #ddd; text-align: right;">Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ item.product.name }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">{{ item.quantity }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd; text-align: right;">{{ item.get_cost }} руб.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" style="padding: 10px; text-align: right;"><strong>Итого:</strong></td>
+                <td style="padding: 10px; text-align: right;"><strong>{{ order.get_total_cost }} руб.</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+</body>
+</html>

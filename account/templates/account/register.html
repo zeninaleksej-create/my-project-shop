@@ -1,0 +1,13 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+  <h1>Создать аккаунт</h1>
+  <p>Пожалуйста, заполните форму ниже:</p>
+  <form method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="Зарегистрироваться"></p>
+  </form>
+{% endblock %}
