@@ -7,8 +7,9 @@
     
     <h3>Детали доставки:</h3>
     <ul>
-        <li><strong>Адрес:</strong> {{ order.city }}, {{ order.address }}</li>
-        <li><strong>Почтовый индекс:</strong> {{ order.postal_code }}</li>
+        <li><strong>Покупатель:</strong> {{ order.first_name }} {{ order.last_name }}</li>
+        <li><strong>Адрес:</strong> {{ order.address }}</li>
+        <li><strong>Email:</strong> {{ order.email }}</li>
     </ul>
 
     <h3>Состав заказа:</h3>

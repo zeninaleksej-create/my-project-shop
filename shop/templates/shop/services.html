@@ -7,7 +7,7 @@
   
   <div class="login-form">
     {% if success %}
-        <p style="color: green; text-align: center;">Спасибо! Ваше пожелание отправлено, мы свяжемся с вами.</p>
+        <p style="color: #5993bb; text-align: center;">Спасибо! Ваше пожелание отправлено, мы свяжемся с вами.</p>
     {% else %}
         <form method="post" action="{% url 'shop:services' %}">
           {% csrf_token %}
