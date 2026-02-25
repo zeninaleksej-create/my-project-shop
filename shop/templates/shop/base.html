@@ -20,6 +20,8 @@
     <div id="header">
   <a href="/" class="logo">Главная</a>
   <a href="{% url 'shop:services' %}" class="logo">Услуги</a>
+  <a href="{% url 'shop:contacts' %}" class="logo">Контакты</a>
+  <a href="{% url 'shop:about' %}" class="logo">О нас</a>
   <div class="user">
     {% if request.user.is_authenticated %}
         <!-- Применяем класс logo к приветствию и кнопкам -->
@@ -67,6 +69,16 @@
       {% block content %}
       {% endblock %}
     </div>
+    <footer id="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Художественная студия. Все права почти защищены.</p>
+            <ul class="footer-links">
+        <a href="{% url 'shop:services' %}">Услуги</a>  
+        <a href="{% url 'shop:about' %}">О нас</a>  <!-- Новая ссылка -->
+        <a href="{% url 'shop:contacts' %}">Контакты</a>
+            </ul>
+        </div>
+    </footer>
   </body>
 </html>
 

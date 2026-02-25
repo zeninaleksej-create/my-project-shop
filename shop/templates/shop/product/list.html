@@ -29,7 +29,7 @@
              alt="{{ product.name }}">
       </a>
       <a href="{{ product.get_absolute_url }}" class="product-title">{{ product.name }}</a>
-      <span class="product-price">${{ product.price }}</span>
+      <span class="product-price">{{ product.price }} ₽</span>
     </div>
   {% endfor %}
 </div>

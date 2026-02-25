@@ -130,3 +130,13 @@ def services(request):
     return render(request, 'shop/services.html', {'form': form, 'success': success})
 
 
+
+
+
+def contacts(request):
+    return render(request, 'shop/contacts.html')
+
+
+
+def about(request):
+    return render(request, 'shop/about.html')
