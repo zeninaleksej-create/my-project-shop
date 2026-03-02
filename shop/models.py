@@ -71,3 +71,18 @@ class ServiceRequest(models.Model):
     def __str__(self):
         return f"Заявка от {self.email} - {self.created_at.strftime('%d.%m.%Y')}"
 
+
+
+
+import os  # Добавьте в начало файла
+from django.db import models
+from django.urls import reverse
+from django.db.models.signals import post_delete  # Добавьте для сигналов
+from django.dispatch import receiver  # Добавьте для сигналов
+
+@receiver(post_delete, sender=Product)
+def delete_product_image(sender, instance, **kwargs):
+    """Удаляет файл изображения из файловой системы после удаления товара"""
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
