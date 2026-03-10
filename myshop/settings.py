@@ -33,7 +33,7 @@ SECRET_KEY = (
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["my-project-shop.ru", "www.my-project-shop.ru", "*", "138.124.228.54", "127.0.0.1"]
 

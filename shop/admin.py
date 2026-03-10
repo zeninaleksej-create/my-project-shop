@@ -29,7 +29,13 @@ class ProductAdmin(admin.ModelAdmin):
 
 from .models import ServiceRequest
 
-@admin.register(ServiceRequest)
-class ServiceRequestAdmin(admin.ModelAdmin):
-    list_display = ['email', 'phone', 'created_at']
 
+from django.contrib import admin
+from .models import ServiceOrder  # Импортируй свою модель
+
+@admin.register(ServiceOrder)
+class ServiceOrderAdmin(admin.ModelAdmin):
+    # Эти колонки будут видны в списке в админке
+    list_display = ('email', 'phone', 'created_at')
+    # Добавим фильтр по дате для удобства
+    list_filter = ('created_at',)

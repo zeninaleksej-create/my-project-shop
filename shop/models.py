@@ -86,3 +86,16 @@ def delete_product_image(sender, instance, **kwargs):
     if instance.image:
         if os.path.isfile(instance.image.path):
             os.remove(instance.image.path)
+
+
+
+from django.db import models
+
+class ServiceOrder(models.Model):
+    email = models.EmailField(verbose_name='Ваша почта')
+    phone = models.CharField(max_length=20, verbose_name='Телефон')
+    description = models.TextField(verbose_name='Описание пожелания')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата заказа')
+
+    def __str__(self):
+        return f"Заказ от {self.email}"

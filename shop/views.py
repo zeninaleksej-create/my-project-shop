@@ -140,3 +140,33 @@ def contacts(request):
 
 def about(request):
     return render(request, 'shop/about.html')
+
+
+
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import ServiceOrderForm
+
+def service_order_view(request):
+    if request.method == 'POST':
+        form = ServiceOrderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Отправка почты
+            subject = 'Новый заказ услуги'
+            message = f"Email: {form.cleaned_data['email']}\nТелефон: {form.cleaned_data['phone']}\nОписание: {form.cleaned_data['description']}"
+            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, ['info@hlamstore.ru'])
+            
+            # ВАЖНО: Редирект на отдельную страницу "Спасибо"
+            return redirect('shop:thanks_page') 
+    else:
+        form = ServiceOrderForm()
+    
+    # Если форма невалидна, Django вернет этот шаблон с ошибками
+    return render(request, 'shop/services.html', {'form': form})
+
+# Отдельная функция для страницы "Спасибо"
+def thanks_view(request):
+    return render(request, 'shop/thanks.html')
+

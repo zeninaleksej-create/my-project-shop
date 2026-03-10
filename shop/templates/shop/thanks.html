@@ -1,0 +1,11 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Спасибо за заказ{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 50px 0;">
+    <h1>Благодарим за обращение!</h1>
+    <p style="font-size: 1.2em;">Ваше пожелание успешно отправлено. Мы свяжемся с вами в ближайшее время.</p>
+    <a href="{% url 'shop:product_list' %}" style="color: #5993bb; text-decoration: underline;">Вернуться в магазин</a>
+</div>
+{% endblock %}
