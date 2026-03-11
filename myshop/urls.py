@@ -26,8 +26,8 @@ urlpatterns = [
     path('account/', include('django.contrib.auth.urls')), 
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
-    path('register/', include('account.urls'), name='register'), # Теперь он выше shop
-    path('', include('shop.urls', namespace='shop')), # ВСЕГДА В КОНЦЕ
+    path('register/', include('account.urls'), name='register'),
+    path('', include('shop.urls', namespace='shop')),
     
 
 ]

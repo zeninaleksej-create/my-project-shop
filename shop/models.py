@@ -1,6 +1,8 @@
+import os
 from django.db import models
 from django.urls import reverse
-
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
@@ -8,9 +10,7 @@ class Category(models.Model):
 
     class Meta:
         ordering = ['id']
-        indexes = [
-            models.Index(fields=['name']),
-        ]
+        indexes = [models.Index(fields=['name'])]
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
@@ -18,23 +18,13 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse(
-            'shop:product_list_by_category', args=[self.slug]
-        )
-
+        return reverse('shop:product_list_by_category', args=[self.slug])
 
 class Product(models.Model):
-    category = models.ForeignKey(
-        Category,
-        related_name='products',
-        on_delete=models.CASCADE
-    )
+    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
-    image = models.ImageField(
-        upload_to='products/%Y/%m/%d',
-        blank=True
-    )
+    image = models.ImageField(upload_to='products/%Y/%m/%d', blank=True)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
@@ -54,14 +44,7 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('shop:product_detail', args=[self.id, self.slug])
-    
-
-
-
-
-
- # Форма для страницы услуги
-
+"""
 class ServiceRequest(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=20)
@@ -70,27 +53,7 @@ class ServiceRequest(models.Model):
 
     def __str__(self):
         return f"Заявка от {self.email} - {self.created_at.strftime('%d.%m.%Y')}"
-
-
-
-
-import os  # Добавьте в начало файла
-from django.db import models
-from django.urls import reverse
-from django.db.models.signals import post_delete  # Добавьте для сигналов
-from django.dispatch import receiver  # Добавьте для сигналов
-
-@receiver(post_delete, sender=Product)
-def delete_product_image(sender, instance, **kwargs):
-    """Удаляет файл изображения из файловой системы после удаления товара"""
-    if instance.image:
-        if os.path.isfile(instance.image.path):
-            os.remove(instance.image.path)
-
-
-
-from django.db import models
-
+"""
 class ServiceOrder(models.Model):
     email = models.EmailField(verbose_name='Ваша почта')
     phone = models.CharField(max_length=20, verbose_name='Телефон')
@@ -98,4 +61,9 @@ class ServiceOrder(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата заказа')
 
     def __str__(self):
-        return f"Заказ от {self.email}"
+        return f"Заказ от {self.email} - {self.created_at.strftime('%d.%m.%Y')}"
+
+@receiver(post_delete, sender=Product)
+def delete_product_image(sender, instance, **kwargs):
+    if instance.image and os.path.isfile(instance.image.path):
+        os.remove(instance.image.path)
